@@ -71,9 +71,8 @@
         {
             let u = new URL(window.location.href);
             code = u.searchParams.get("code");
-            error = uu.searchParams.get("error");
+            error = u.searchParams.get("error");
             state = u.searchParams.get("state");
-
             
             if (code !== null)
             {
