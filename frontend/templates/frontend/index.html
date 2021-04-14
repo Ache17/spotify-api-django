@@ -9,6 +9,7 @@
             <div id="username"></div>
             <div id="country"></div>
             <div id="email"></div>
+            <div id="user_id"></div>
         </div>
     </body>
 
@@ -23,6 +24,7 @@
         var scope = null;
         var expires_in = null;
         var refresh_token = null;
+        let user_id = null;
         var data;
         
 
@@ -70,8 +72,8 @@
             scope = data['scope'];
 
             let d = document.getElementById("button1");
-            d.innerHTML = "make spotify request";
-            d.onclick = makeSpotifyRequest;
+            d.innerHTML = "get user id";
+            d.onclick = getSpotifyID;
         }
 
         function getTokenFailure(req)
@@ -108,24 +110,50 @@
 
         }
 
-        function makeSpotifyRequestSuccess(req)
+        function createSpotifyPlaylistSuccess(req)
+        {
+            console.log(JSON.parse(req.data));
+        }
+        function createSpotifyPlaylistFailure(req)
+        {
+
+        }
+
+        function createSpotifyPlaylist()
+        {
+            let reqS = new XMLHttpRequest();
+            reqS.open("POST", "	https://api.spotify.com/v1/users/" + user_id + "/playlists");
+            reqS.setRequestHeader("Accept", "application/json");
+            reqS.setRequestHeader("Content-Type", "application/json");
+            reqS.setRequestHeader("Authorization", "Bearer " + access_token);
+            reqS.addEventListener("load", () => {
+                if (reqS.status < 300 && reqS.status >= 200)
+                createSpotifyPlaylistSuccess(reqS);
+                else
+                createSpotifyPlaylistFailure(reqS);
+            });
+
+            reqS.send(JSON.stringify({ "name" : "spotify_api_project_test", "description" : "spotify api project test", "public" : false }));
+        }
+        function getSpotifyIDSuccess(req)
         {
             data = JSON.parse(req.response);
+            user_id = data['id'];
             document.getElementById("panel").style.display = 'block';
             document.getElementById("username").innerHTML = data['display_name'];
             document.getElementById("country").innerHTML = data['country'];
             document.getElementById("email").innerHTML = data['email'];
+            document.getElementById("user_id") = user_id;
 
+            document.getElementById("button1").innerHTML = "create sample playlist";
+            document.getElementById("button1").onclick = createSpotifyPlaylist;
         }
-
-        function makeSpotifyRequestFailure(req)
+        function getSpotifyIDFailure(req)
         {
             console.log("NOT CEWL");
             console.log(req.response);
         }
-        
-
-        function makeSpotifyRequest()
+        function getSpotifyID()
         {
             let reqS = new XMLHttpRequest();
             reqS.open("GET", "https://api.spotify.com/v1/me", true);
@@ -136,10 +164,10 @@
             reqS.addEventListener("load", () =>
             {
                 if (reqS.status < 300 && reqS.status >= 200)
-                    makeSpotifyRequestSuccess(reqS);
+                    getSpotifyIDSuccess(reqS);
                 else
-                    makeSpotifyRequestFailure(reqS);
-            })
+                    getSpotifyIDFailure(reqS);
+            });
             
             reqS.send();
         }
