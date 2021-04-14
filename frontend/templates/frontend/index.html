@@ -46,7 +46,7 @@
 
         function get_spotify()
         {
-            let redirect = window.location.href;
+            let redirect = window.location.origin;
             let q = {"response_type" : "code", "client_id" : "5ef4bb85e1a9499593ac6a9477993c08", 
                     "scope" : "user-read-private user-read-email", "redirect_uri" : redirect, state : generateRandomString(16)};
             let p = encode(q);
@@ -56,11 +56,13 @@
         function getToken()
         {
             const req = new XMLHttpRequest();
-            let p = encode({"grant_type" : "authorization_code", "code" : code, "redirect_uri" : window.location.href });
+            let param = {"grant_type" : "authorization_code", "code" : code, "redirect_uri" : window.location.href };
+            console.log(window.location.href);
+            let p = encode(param);
             req.open("POST", "https://accounts.spotify.com/api/token", true);
             
             req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            req.setRequestHeader("Authorization", "Basic " + btoa( client_id + ":" + client_secret ));
+            req.setRequestHeader("Authorization", "Basic NWVmNGJiODVlMWE5NDk5NTkzYWM2YTk0Nzc5OTNjMDg6ZTdmYjIwYTc5N2U1NGI4OGJmYTM0MjIwZDgyYjdkM2Q=");
 
             req.send(p);
         }
