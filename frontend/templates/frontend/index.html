@@ -56,10 +56,10 @@
         function getToken()
         {
             const req = new XMLHttpRequest();
-            let param = {"grant_type" : "authorization_code", "code" : code, "redirect_uri" : window.location.href };
-            console.log(window.location.href);
+            let param = {"grant_type" : "authorization_code", "code" : code, "redirect_uri" : window.location.origin + "/" };
             let p = encode(param);
             req.open("POST", "https://accounts.spotify.com/api/token", true);
+            console.log(p);
             
             req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             req.setRequestHeader("Authorization", "Basic NWVmNGJiODVlMWE5NDk5NTkzYWM2YTk0Nzc5OTNjMDg6ZTdmYjIwYTc5N2U1NGI4OGJmYTM0MjIwZDgyYjdkM2Q=");
