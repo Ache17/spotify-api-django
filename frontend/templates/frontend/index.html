@@ -67,7 +67,7 @@
 
         }
 
-        function getToken()
+        function main()
         {
             let u = new URL(window.loation.href);
             code = u.searchParams.get("code");
@@ -84,7 +84,7 @@
             }
         }
 
-        getToken();
+        main();
 
     </script>
 </html>
