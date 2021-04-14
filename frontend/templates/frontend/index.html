@@ -1,0 +1,45 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <button onclick="get_spotify()"> click me to login to spotify </button>
+    </body>
+
+    <script>
+
+        var generateRandomString = function(length) {
+        var text = '';
+        var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        for (var i = 0; i < length; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+        };
+        
+        function encode(d)
+        {
+            let v = [];
+            for (let k in d)
+                v.push(encodeURIComponent(k) + "=" + encodeURIComponent(d[k]));
+            
+            let ret = v[0];
+
+            for (let i = 1; i < v.length; ++i)
+            {
+                ret = ret + "&" + v[i];
+            }
+            return ret;
+        }
+
+        function get_spotify()
+        {
+            let redirect = window.location.href;
+            let q = {"response_type" : "code", "client_id" : "5ef4bb85e1a9499593ac6a9477993c08", 
+                    "scope" : "user-read-private user-read-email", "redirect_uri" : redirect, state : generateRandomString(16)};
+            let p = encode(q);
+            window.location.replace("https://accounts.spotify.com/authorize?" + p);
+        }
+    </script>
+</html>
