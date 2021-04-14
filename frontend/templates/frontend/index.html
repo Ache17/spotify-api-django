@@ -112,11 +112,13 @@
 
         function createSpotifyPlaylistSuccess(req)
         {
-            console.log(req);
+            data = JSON.parse(req.response);
+            console.log(data);
         }
         function createSpotifyPlaylistFailure(req)
         {
-            console.log(req);
+            data = JSON.parse(req.response);
+            console.log(data);
         }
 
         function createSpotifyPlaylist()
