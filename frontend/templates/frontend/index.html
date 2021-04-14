@@ -135,6 +135,7 @@
                 addToThePlaylistFailure(reqS);
             });
             let newSongs = processSpotifySongs(spotify_songs_ids);
+            console.log(newSongs);
             reqS.send(JSON.stringify({"uris" : newSongs}));
         }
 
