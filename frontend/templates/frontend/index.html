@@ -4,6 +4,12 @@
     </head>
     <body>
         <button id="button1" onclick="get_spotify_auth()"> authenticate </button>
+
+        <div id="panel" style="display: none;">
+            <div id="username"></div>
+            <div id="country"></div>
+            <div id="email"></div>
+        </div>
     </body>
 
     <script>
@@ -103,14 +109,18 @@
 
         function makeSpotifyRequestSuccess(req)
         {
-            console.log("CEWL");
-            console.log(req);
+            let data = JSON.parse(req.response);
+            document.getElementById("panel").style.display = 'block';
+            document.getElementById("username").innerHTML = data['display_name'];
+            document.getElementById("country").innerHTML = data['country'];
+            document.getElementById("email").innerHTML = data['email'];
+
         }
 
         function makeSpotifyRequestFailure(req)
         {
             console.log("NOT CEWL");
-            console.log(req);
+            console.log(req.response);
         }
         
 
