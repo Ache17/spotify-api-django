@@ -23,6 +23,7 @@
         var scope = null;
         var expires_in = null;
         var refresh_token = null;
+        var data;
         
 
         var generateRandomString = function(length) {
@@ -109,7 +110,7 @@
 
         function makeSpotifyRequestSuccess(req)
         {
-            let data = JSON.parse(req.response);
+            data = JSON.parse(req.response);
             document.getElementById("panel").style.display = 'block';
             document.getElementById("username").innerHTML = data['display_name'];
             document.getElementById("country").innerHTML = data['country'];
