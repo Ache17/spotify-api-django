@@ -74,7 +74,7 @@
 
         function getToken()
         {
-            const req = new XMLHttpRequest();
+            let req = new XMLHttpRequest();
             let param = {"grant_type" : "authorization_code", "code" : code, "redirect_uri" : window.location.origin + "/" };
             let p = encode(param);
             req.open("POST", "https://accounts.spotify.com/api/token", true);
@@ -115,21 +115,21 @@
 
         function makeSpotifyRequest()
         {
-            const req = new XMLHttpRequest();
-            req.open("GET", "https://api.spotify.com/v1/me'", true);
-            req.setRequestHeader("Accept", "application/json");
-            req.setRequestHeader("Content-Type", "application/json");
-            req.setRequestHeader("Authorization", "Bearer " + access_token);
+            let reqS = new XMLHttpRequest();
+            reqS.open("GET", "https://api.spotify.com/v1/me", true);
+            reqS.setRequestHeader("Accept", "application/json");
+            reqS.setRequestHeader("Content-Type", "application/json");
+            reqS.setRequestHeader("Authorization", "Bearer " + access_token);
             
-            req.addEventListener("load", () =>
+            reqS.addEventListener("load", () =>
             {
-                if (req.status < 300 && req.status >= 200)
-                    makeSpotifyRequestSuccess(req);
+                if (reqS.status < 300 && reqS.status >= 200)
+                    makeSpotifyRequestSuccess(reqS);
                 else
-                    makeSpotifyRequestFailure(req);
+                    makeSpotifyRequestFailure(reqS);
             })
             
-            req.send();
+            reqS.send();
         }
 
         function main()
