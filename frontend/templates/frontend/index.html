@@ -53,6 +53,16 @@
             window.location.replace("https://accounts.spotify.com/authorize?" + p);
         }
 
+        function getTokenSuccess(req)
+        {
+            console.log(req.response);
+        }
+
+        function getTokenFailure(req)
+        {
+
+        }
+
         function getToken()
         {
             const req = new XMLHttpRequest();
@@ -63,6 +73,14 @@
             
             req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             req.setRequestHeader("Authorization", "Basic NWVmNGJiODVlMWE5NDk5NTkzYWM2YTk0Nzc5OTNjMDg6ZTdmYjIwYTc5N2U1NGI4OGJmYTM0MjIwZDgyYjdkM2Q=");
+
+            req.addEventListener("load", () => 
+            {
+                if (req.status < 300 && req.status >= 200)
+                    getTokenSuccess(req);
+                else
+                    getTokenFailure(req);
+            });
 
             req.send(p);
         }
