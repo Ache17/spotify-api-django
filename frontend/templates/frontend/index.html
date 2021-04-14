@@ -57,7 +57,7 @@
         {
             let redirect = window.location.origin + "/";
             let q = {"response_type" : "code", "client_id" : "5ef4bb85e1a9499593ac6a9477993c08", 
-                    "scope" : "user-read-private user-read-email", "redirect_uri" : redirect, state : generateRandomString(16)};
+                    "scope" : "user-read-private user-read-email playlist-modify-private", "redirect_uri" : redirect, state : generateRandomString(16)};
             let p = encode(q);
             window.location.replace("https://accounts.spotify.com/authorize?" + p);
         }
