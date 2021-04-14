@@ -117,6 +117,8 @@
         {
             const req = new XMLHttpRequest();
             req.open("GET", "https://api.spotify.com/v1/me'", true);
+            req.setRequestHeader("Accept", "application/json");
+            req.setRequestHeader("Content-Type", "application/json");
             req.setRequestHeader("Authorization", "Bearer " + access_token);
             
             req.addEventListener("load", () =>
