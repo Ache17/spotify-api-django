@@ -141,8 +141,8 @@
         function processSpotifySongs(songs)
         {
             let newSongs = [];
-            for (let song in songs)
-                newSongs.push("spotify:track:" + song);
+            for (let i in songs)
+                newSongs.push("spotify:track:" + songs[i]);
             return newSongs;
         }
 
