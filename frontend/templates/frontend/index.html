@@ -62,7 +62,7 @@
             refresh_token = data['refresh_token'];
             scope = data['scope'];
 
-            let d = window.getElementById("button1");
+            let d = document.getElementById("button1");
             d.innerHTML = "make spotify request";
             d.onclick = makeSpotifyRequest;
         }
