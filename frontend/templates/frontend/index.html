@@ -3,7 +3,7 @@
 
     </head>
     <body>
-        <button id="button1" onclick="get_spotify()"> click me to login to spotify </button>
+        <button id="button1" onclick="get_spotify()"> authenticate </button>
     </body>
 
     <script>
@@ -12,6 +12,11 @@
         var error = null;
         var client_id = "5ef4bb85e1a9499593ac6a9477993c08";
         var client_secret = "e7fb20a797e54b88bfa34220d82b7d3d";
+        var access_token = null;
+        var token_type = null;
+        var scope = null;
+        var expires_in = null;
+        var refresh_token = null;
         
 
         var generateRandomString = function(length) {
@@ -57,7 +62,7 @@
             req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             req.setRequestHeader("Authorization", "Basic " + btoa( client_id + ":" + client_secret ));
 
-
+            req.send(p);
         }
 
         function addPlaylist()
@@ -66,6 +71,11 @@
             getToken();
 
         }
+        
+        function makeSpotifyRequest()
+        {
+            console.log(access_token);
+        }
 
         function main()
         {
@@ -73,14 +83,29 @@
             code = u.searchParams.get("code");
             error = u.searchParams.get("error");
             state = u.searchParams.get("state");
-            
+            access_token  = u.searchParams.get("access_token");
+            token_type = u.searchParams.get("token_type");
+            scope = u.searchParams.get("scope");
+            expires_in = u.searchParams.get("expires_in");
+            refresh_token = u .searchParams.get("refresh_token");
+
             if (code !== null)
             {
                 console.log(code);
                 let d = document.getElementById("button1");
-                d.innerHTML = "addPlaylist";
+                d.innerHTML = "get token";
                 d.onclick = addPlaylist;
             }
+
+            else if (access_token != null)
+            {
+                console.log(access_token);
+                let d = document.getElementById("button1");
+                d.innerHTML = "make spotify request";
+                d.onclick = makeSpotifyRequest;
+            }
+
+            
         }
 
         main();
