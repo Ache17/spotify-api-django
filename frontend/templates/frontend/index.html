@@ -119,7 +119,7 @@
             req.open("GET", "https://api.spotify.com/v1/me'", true);
             req.setRequestHeader("Authorization", "Bearer " + access_token);
             
-            re.addEventListener("load", () =>
+            req.addEventListener("load", () =>
             {
                 if (req.status < 300 && req.status >= 200)
                     makeSpotifyRequestSuccess(req);
