@@ -3,7 +3,7 @@
 
     </head>
     <body>
-        <button id="button1" onclick="get_spotify()"> authenticate </button>
+        <button id="button1" onclick="get_spotify_auth()"> authenticate </button>
     </body>
 
     <script>
@@ -44,7 +44,7 @@
             return ret;
         }
 
-        function get_spotify()
+        function get_spotify_auth()
         {
             let redirect = window.location.origin + "/";
             let q = {"response_type" : "code", "client_id" : "5ef4bb85e1a9499593ac6a9477993c08", 
@@ -55,7 +55,16 @@
 
         function getTokenSuccess(req)
         {
-            console.log(req.response);
+            let data = JSON.parse(req.response);
+            access_token = data['access_token'];
+            token_type = data['token_type'];
+            expires_in = data['expires_in'];
+            refresh_token = data['refresh_token'];
+            scope = data['scope'];
+
+            let d = window.getElementById("button1");
+            d.innerHTML = "make spotify request";
+            d.onclick = makeSpotifyRequest;
         }
 
         function getTokenFailure(req)
@@ -91,10 +100,34 @@
             getToken();
 
         }
+
+        function makeSpotifyRequestSuccess(req)
+        {
+            let data = JSON.parse(req.data);
+            console.log(data);
+        }
+
+        function makeSpotifyRequestFailure(req)
+        {
+            let data = JSON.parse(req.data);
+        }
         
+
         function makeSpotifyRequest()
         {
-            console.log(access_token);
+            const req = new XMLHttpRequest();
+            req.open("GET", "https://api.spotify.com/v1/me'", true);
+            req.setRequestHeader("Authorization", "Bearer " + access_token);
+            
+            re.addEventListener("load", () =>
+            {
+                if (req.status < 300 && req.status >= 200)
+                    makeSpotifyRequestSuccess(req);
+                else
+                    makeSpotifyRequestFailure(req);
+            })
+            
+            req.send();
         }
 
         function main()
@@ -116,15 +149,6 @@
                 d.innerHTML = "get token";
                 d.onclick = addPlaylist;
             }
-
-            else if (access_token != null)
-            {
-                console.log(access_token);
-                let d = document.getElementById("button1");
-                d.innerHTML = "make spotify request";
-                d.onclick = makeSpotifyRequest;
-            }
-
             
         }
 
